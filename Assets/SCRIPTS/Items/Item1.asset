@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c468ab0c6f6eb1478ac46ffe41e23a3, type: 3}
+  m_Name: Item1
+  m_EditorClassIdentifier: 
+  <IsStackable>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 1
+  <Name>k__BackingField: 1
+  <Description>k__BackingField: 'Our little one arrived Today 2/05, at 5:43 AM.Holding
+    her for the first time was like holding pure joy.
+
+    She''s so small and perfect,with
+    the cutest little features.
+
+    Every time I look at her,my heart feels full.
+    She ''s already brought so much happiness in our lives. I can''t wait to see
+    her grow and discover the world around her!'
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 31630c953276a6746bba2bdc002778c4, type: 3}
+  <DefaultParametersList>k__BackingField: []

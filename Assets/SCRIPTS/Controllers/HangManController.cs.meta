@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2d2bae00d856f7544a116f08dffdab4e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - wordContainer: {instanceID: 0}
+  - KeyboardContainer: {instanceID: 0}
+  - letterContainer: {instanceID: 0}
+  - letterButton: {instanceID: 0}
+  - possibleWord: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
