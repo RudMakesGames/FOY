@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PadlockManager : MonoBehaviour
+public class PadlockManager : MonoBehaviour,IPuzzle
 {
     public bool PuzzleCompleted;
     [Header("The Puzzle UI ref")]
@@ -11,6 +11,7 @@ public class PadlockManager : MonoBehaviour
     public TextMeshProUGUI[] Textnumber;
     public string desiredNo;
     public int[] number;
+
     [Header("Ref for the object which carries the puzzle")]
     public GameObject Briefcase;
     [Header("Ref for the open object UI")]
@@ -58,11 +59,7 @@ public class PadlockManager : MonoBehaviour
             }
         }
 
-        Debug.Log("PuzzleCorrected");
-        PuzzleCompleted = true;
-        AudioManager.instance.PlaySoundFXClip(CaseOpen, transform, 1, 1);
-        TaskManager.instance.TaskComplete();
-        if (Task3 != null) { Task3.SetActive(true); }
+        
 
     }
     IEnumerator GetKey()
@@ -75,14 +72,14 @@ public class PadlockManager : MonoBehaviour
             PlayerManager.Instance.PickupKey();
             Debug.Log("Key pickedup");
             
-            PuzzleCompleted=false;
+            PuzzleCompleted = false;
             
             BriefcaseCutscene.SetActive(true);
             yield return new WaitForSeconds(3);
             
             
            
-           
+           OnPuzzleComplete();
 
         }
     }
@@ -107,9 +104,29 @@ public class PadlockManager : MonoBehaviour
 
     private void Update()
     {if(PuzzleCompleted)
+
         {
             StartCoroutine(GetKey());
         }
     
+    }
+
+    public void OpenPuzzle()
+    {
+       gameObject.SetActive(true);
+    }
+
+    public void ClosePuzzle()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void OnPuzzleComplete()
+    {
+        Debug.Log("PuzzleCorrected");
+        PuzzleCompleted = true;
+        AudioManager.instance.PlaySoundFXClip(CaseOpen, transform, 1, 1);
+        TaskManager.instance.TaskComplete();
+        Task3?.SetActive(true); 
     }
 }
