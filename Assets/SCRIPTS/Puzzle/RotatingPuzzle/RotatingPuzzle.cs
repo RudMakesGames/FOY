@@ -35,7 +35,10 @@ public class RotatingPuzzle : MonoBehaviour, IPuzzle
 
     public void OnPuzzleComplete()
     {
-        
+        foreach (var r in Rotatables)
+        {
+            r.AllowedToReset = true;
+        }
         Debug.Log("Completed Puzzle!");
         response?.OnPuzzleFinish();
         PuzzleCompleted = true;

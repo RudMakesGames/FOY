@@ -18,7 +18,7 @@ public class Rotatetable : MonoBehaviour
     private float lastRotationTime;
     private Quaternion targetRotation;
     private bool isRotating = false;
-    bool AllowedToReset = true;
+    public bool AllowedToReset = true;
     private void Start()
     {
         targetRotation = transform.rotation;
@@ -84,7 +84,7 @@ public class Rotatetable : MonoBehaviour
             IsCorrect = true;
             Debug.Log("Correct Rotation : " + CorrectAngle);
             GetComponent<Image>().sprite = CorrectSprite;
-            AllowedToReset = false;
+            
         }
     }
 }

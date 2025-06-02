@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &45568676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,9 +375,10 @@ MonoBehaviour:
   CorrectAngle: 15
   rotationStep: 15
   rotationSpeed: 180
-  inactivityResetTime: 4
+  inactivityResetTime: 6
   IsCorrect: 0
   canRotate: 1
+  AllowedToReset: 1
 --- !u!1 &433362566
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,7 +613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &779851855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,7 +680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &957561258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,6 +868,7 @@ MonoBehaviour:
   inactivityResetTime: 4
   IsCorrect: 0
   canRotate: 1
+  AllowedToReset: 1
 --- !u!1 &1165548410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,9 +1019,10 @@ MonoBehaviour:
   CorrectAngle: 15
   rotationStep: 15
   rotationSpeed: 180
-  inactivityResetTime: 4
+  inactivityResetTime: 2
   IsCorrect: 0
   canRotate: 1
+  AllowedToReset: 1
 --- !u!1 &1507777501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1176,7 @@ MonoBehaviour:
   inactivityResetTime: 4
   IsCorrect: 0
   canRotate: 1
+  AllowedToReset: 1
 --- !u!1 &2112007215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,9 +1327,10 @@ MonoBehaviour:
   CorrectAngle: 15
   rotationStep: 15
   rotationSpeed: 180
-  inactivityResetTime: 4
+  inactivityResetTime: 2
   IsCorrect: 0
   canRotate: 1
+  AllowedToReset: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
