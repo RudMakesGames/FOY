@@ -19,6 +19,9 @@ public class Rotatetable : MonoBehaviour
     private Quaternion targetRotation;
     private bool isRotating = false;
     public bool AllowedToReset = true;
+
+    [SerializeField]
+    AudioClip PressSfx;
     private void Start()
     {
         targetRotation = transform.rotation;
@@ -32,6 +35,7 @@ public class Rotatetable : MonoBehaviour
 
         float newZ = transform.localEulerAngles.z + rotationStep;
         targetRotation = Quaternion.Euler(0, 0, newZ % 360);
+        AudioManager.instance.PlaySoundFXClip(PressSfx, transform, 1, Random.Range(0.9f, 1.1f));
         StartCoroutine(RotateSmoothly());
 
         

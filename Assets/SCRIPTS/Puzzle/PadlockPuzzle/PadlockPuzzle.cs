@@ -75,7 +75,7 @@ public class PadlockPuzzle : MonoBehaviour
         Debug.Log("PuzzleCorrected");
         PuzzleCompleted = true;
         AudioManager.instance.PlaySoundFXClip(CaseOpen, transform, 1, 1);
-        TaskManager.instance.TaskComplete();
+        TaskManager.instance?.TaskComplete();
         Task3?.SetActive(true);
         response.OnPuzzleFinish();
     }

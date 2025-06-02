@@ -8,6 +8,7 @@ public class RotatingPuzzle : MonoBehaviour, IPuzzle
     [Header("The Puzzle UI ref")]
     [SerializeField]
     private Rotatetable[] Rotatables;
+
     
     public Response response;
 
@@ -15,11 +16,14 @@ public class RotatingPuzzle : MonoBehaviour, IPuzzle
     {
         foreach (var r in Rotatables)
         {
-            if(r.IsCorrect)
+            if (!r.IsCorrect)
             {
-                OnPuzzleComplete();
+                return; // Exit early if any is incorrect
             }
         }
+
+        // All rotatables are correct
+        OnPuzzleComplete();
     }
     private void Update()
     {
@@ -35,13 +39,15 @@ public class RotatingPuzzle : MonoBehaviour, IPuzzle
 
     public void OnPuzzleComplete()
     {
-        foreach (var r in Rotatables)
-        {
-            r.AllowedToReset = true;
-        }
+       
         Debug.Log("Completed Puzzle!");
         response?.OnPuzzleFinish();
         PuzzleCompleted = true;
+        foreach (var r in Rotatables)
+        {
+            r.AllowedToReset = false;
+        }
+        
     }
 
     public void OpenPuzzle()
