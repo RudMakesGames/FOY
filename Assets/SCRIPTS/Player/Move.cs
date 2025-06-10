@@ -67,6 +67,10 @@ namespace Inventory
         public GameObject MovePrompt, JumpPrompt, InteractPrompt;
 
         private bool isAorDpressed, isJumpPressed, isEpressed;*/
+
+        [Header("Idle Animation Switching")]
+        [SerializeField]
+        private float IdleTimer = 5;
         private void Start()
         {
 
@@ -144,7 +148,12 @@ namespace Inventory
         }
         private void Update()
         {
-
+            IdleTimer -= Time.deltaTime;
+            if(IdleTimer <= 0 )
+            {
+                anim.SetInteger("IdleCount",Random.Range(1,3));
+                IdleTimer = 5;
+            }
             #region 
 
             if (isJumping == true)
