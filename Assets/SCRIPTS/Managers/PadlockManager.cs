@@ -59,7 +59,7 @@ public class PadlockManager : MonoBehaviour,IPuzzle
             }
         }
 
-        
+        OnPuzzleComplete();
 
     }
     IEnumerator GetKey()
