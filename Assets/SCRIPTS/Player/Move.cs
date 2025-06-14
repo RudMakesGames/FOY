@@ -30,8 +30,9 @@ namespace Inventory
         public Transform groundcheck;
         public LayerMask groundLayer;
         public LayerMask stairLayer;
-        private float horizontal;
-        [Range(-5f,20f)]
+        public float horizontal;
+        [Range(-5f, 20f)]
+        private Vector2 moveInput;
         [SerializeField]
         public float speed = 3f,
          JumpPower = 7f,
@@ -85,75 +86,18 @@ namespace Inventory
             Physics2D.IgnoreLayerCollision(3, 6, false);
             Debug.Log("Collision Enabled Again");
         }
-        private void FixedUpdate()
-        {
-            if (isOnStairs())
-            {
-               StartCoroutine(StairCase());
-                
-            }
-            else if(isGrounded())
-            {
-               
-                Physics2D.IgnoreLayerCollision(3, 6, false);
-            }
-        
-            
-            if (Mathf.Abs(horizontal) > 0.1f)
-            {
-                if (isGrounded())
-                {
-                    if(anim!= null)
-                    {
-                        if (!Walking.isPlaying && Time.time >= nextFootstepTime)
-                        {
-                            anim.SetBool("IsRunning", true);
-                            Walking.Play();
-                            nextFootstepTime = Time.time + footstepDelay;
-                        }
-                        Walking.pitch = pitchChnageRate * Time.deltaTime;
-                        Walking.pitch = Random.Range(MinPitch, MaxPitch);
-                    }
-                  
-                }
-
-                if (isOnStairs())
-                {
-                    if (anim != null)
-                    {
-                        if (!StairWalk.isPlaying && Time.time >= nextStairFootstepTime)
-                        {
-                            anim.SetBool("IsRunning", true);
-                            StairWalk.Play();
-                            nextStairFootstepTime = Time.time + StairFootstepDelay;
-                        }
-                        StairWalk.pitch = StairPitchChangeRate * Time.deltaTime;
-                        StairWalk.pitch = Random.Range(MinStairPitch, MaxStairPitch);
-                    }
-                  
-                }
-
-            }
-            else
-            {
-                if(anim != null)
-                {
-                    anim.SetBool("IsRunning", false);
-                    Walking.Stop();
-
-                }
-
-            }
-
-        }
         private void Update()
         {
-            IdleTimer -= Time.deltaTime;
-            if(IdleTimer <= 0 )
+            if(isGrounded() && anim.GetBool("IsRunning") == false)
             {
-                anim.SetInteger("IdleCount",Random.Range(1,3));
-                IdleTimer = 5;
+                IdleTimer -= Time.deltaTime;
+                if (IdleTimer <= 0)
+                {
+                    anim.SetInteger("IdleCount", Random.Range(1, 3));
+                    IdleTimer = 5;
+                }   
             }
+            anim.SetBool("IsRunning", horizontal != 0);
             #region 
 
             if (isJumping == true)
@@ -228,7 +172,62 @@ namespace Inventory
             {
                 rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
             }
-            
+            if (isOnStairs())
+            {
+                StartCoroutine(StairCase());
+
+            }
+            else if (isGrounded())
+            {
+
+                Physics2D.IgnoreLayerCollision(3, 6, false);
+            }
+
+
+            if (horizontal != 0f)
+            {
+                if (isGrounded())
+                {
+                    if (anim != null)
+                    {
+                        if (!Walking.isPlaying && Time.time >= nextFootstepTime)
+                        {
+                            Walking.Play();
+                            nextFootstepTime = Time.time + footstepDelay;
+                        }
+                        Walking.pitch = pitchChnageRate * Time.deltaTime;
+                        Walking.pitch = Random.Range(MinPitch, MaxPitch);
+                    }
+
+                }
+
+                if (isOnStairs())
+                {
+                    if (anim != null)
+                    {
+                        if (!StairWalk.isPlaying && Time.time >= nextStairFootstepTime)
+                        {
+                            StairWalk.Play();
+                            nextStairFootstepTime = Time.time + StairFootstepDelay;
+                        }
+                        StairWalk.pitch = StairPitchChangeRate * Time.deltaTime;
+                        StairWalk.pitch = Random.Range(MinStairPitch, MaxStairPitch);
+                    }
+
+                }
+
+            }
+            else
+            {
+                if (anim != null)
+                {
+                    anim.SetBool("IsRunning", false);
+                    Walking.Stop();
+
+                }
+
+            }
+
             Flip();
             #endregion
         }
@@ -282,7 +281,15 @@ namespace Inventory
         {
             if (!inDialogue)
             {
-                horizontal = context.ReadValue<Vector2>().x;
+                if(context.performed)
+                {
+                    horizontal = context.ReadValue<Vector2>().x;
+                }
+                else if(context.canceled)
+                {
+                    horizontal = 0f;
+                }
+                
 
             }
 
