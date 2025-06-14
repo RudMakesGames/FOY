@@ -31,6 +31,7 @@ public class Interactable : MonoBehaviour
             {
                 anim.SetBool("IsInteracted", true);
                 interaction.Invoke();
+               
             }
             
         }
@@ -44,7 +45,7 @@ public class Interactable : MonoBehaviour
             Debug.Log("InRange");
             PlayerManager.Instance.NotifyPlayer();
             InteractionCircle.SetActive(true);
-
+            
         }
     }
     
@@ -58,6 +59,7 @@ public class Interactable : MonoBehaviour
             Debug.Log("OutofRange");
             PlayerManager.Instance.DeNotifyPlayer();
             InteractionCircle.SetActive(true);
+            anim.SetBool("IsInteracted", false);
 
 
         }
