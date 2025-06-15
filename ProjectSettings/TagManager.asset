@@ -18,6 +18,7 @@ TagManager:
   - Head
   - L_Arm
   - R_Arm
+  - PlayerPerspective
   layers:
   - Default
   - TransparentFX
