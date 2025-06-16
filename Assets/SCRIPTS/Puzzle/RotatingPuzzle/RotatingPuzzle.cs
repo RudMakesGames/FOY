@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RotatingPuzzle : MonoBehaviour, IPuzzle
 {
+    [SerializeField]
+    GameObject Puzzle;
     public bool PuzzleCompleted;
     [Header("The Puzzle UI ref")]
     [SerializeField]
@@ -34,7 +36,7 @@ public class RotatingPuzzle : MonoBehaviour, IPuzzle
     }
     public void ClosePuzzle()
     {
-        gameObject.SetActive(false);
+       Puzzle.SetActive(false);
     }
 
     public void OnPuzzleComplete()
@@ -47,11 +49,11 @@ public class RotatingPuzzle : MonoBehaviour, IPuzzle
         {
             r.AllowedToReset = false;
         }
-        
+        ClosePuzzle();
     }
 
     public void OpenPuzzle()
     {
-       gameObject.SetActive(true);
+      Puzzle.SetActive(true);
     }
 }
