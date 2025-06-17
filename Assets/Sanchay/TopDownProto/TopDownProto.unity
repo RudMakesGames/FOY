@@ -522,9 +522,9 @@ GameObject:
   m_Component:
   - component: {fileID: 516619942}
   - component: {fileID: 516619941}
-  - component: {fileID: 516619945}
   - component: {fileID: 516619944}
   - component: {fileID: 516619943}
+  - component: {fileID: 516619946}
   m_Layer: 0
   m_Name: prototype_character_red_0
   m_TagString: Untagged
@@ -661,7 +661,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &516619945
+--- !u!114 &516619946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -670,10 +670,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 516619940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3590cf02b9c2e7a4093ea0f02eeaceb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7252bba97c70949439d069f994451a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
+  moveSpeed: 2
 --- !u!1 &846037024
 GameObject:
   m_ObjectHideFlags: 0

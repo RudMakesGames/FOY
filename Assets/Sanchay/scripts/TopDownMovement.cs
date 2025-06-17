@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class isometricMovement : MonoBehaviour
+public class TopDownMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     Rigidbody2D rb;
@@ -20,9 +20,9 @@ public class isometricMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        /*if (Mathf.Abs(horizontalInput) > 0)
+        if (Mathf.Abs(horizontalInput) > 0)
         {
-             moveInput = new Vector2(horizontalInput, 0);
+            moveInput = new Vector2(horizontalInput, 0);
         }
 
         else if (Mathf.Abs(verticalInput) > 0)
@@ -33,16 +33,16 @@ public class isometricMovement : MonoBehaviour
         else
         {
             moveInput = Vector2.zero;
-        }*/
+        }
 
-        moveInput = new Vector2 (horizontalInput, verticalInput);
+        //moveInput = new Vector2 (horizontalInput, verticalInput);
         movementMag = moveInput * moveSpeed;
     }
 
     private void FixedUpdate()
     {
         Vector2 currentPos = rb.position;
-        Vector2 newPos = currentPos+movementMag*Time.deltaTime;
+        Vector2 newPos = currentPos + movementMag * Time.deltaTime;
 
         rb.MovePosition(newPos);
     }
