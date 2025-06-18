@@ -37,32 +37,23 @@ public class PerspectiveChanger : MonoBehaviour
         switch (perspective)
         {
             case Perspective.SideScroller:
-                CamFollow.Follow = gameObject.transform;
-                EnableSideScroller();
-                TopDownCharacter.SetActive(false);
-                IsometricCharacter.SetActive(false);
+                SideScrollerMode();
                 break;
             case Perspective.TopDown:
-                DisableSideScroller();
-                CamFollow.Follow = TopDownCharacter.transform;
-                TopDownCharacter.SetActive(true);
-                IsometricCharacter.SetActive(false);
+                TopDownMode();
                 break;
             case Perspective.Isometric:
-                DisableSideScroller();
-                CamFollow.Follow = IsometricCharacter.transform;               
-                TopDownCharacter.SetActive(false);
-                IsometricCharacter.SetActive(true);
+               IsometricMode();
                 break;
         }
     }
 
     private void DisableSideScroller()
     {
-        InteractionEye.SetActive(false);
-        GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
         GetComponent<Collider2D>().enabled = false;
+        InteractionEye.SetActive(false);
+        GetComponent<SpriteRenderer>().enabled = false;      
         GetComponent<PlayerInput>().enabled = false;
     }
 
@@ -73,5 +64,31 @@ public class PerspectiveChanger : MonoBehaviour
         GetComponent<Rigidbody2D>().gravityScale = 1;
         GetComponent<Collider2D>().enabled = true;
         GetComponent<PlayerInput>().enabled = true;
+    }
+    private void SideScrollerMode()
+    {
+        CamFollow.m_Lens.OrthographicSize = 5;
+        CamFollow.Follow = gameObject.transform;
+        EnableSideScroller();
+        TopDownCharacter.SetActive(false);
+        IsometricCharacter.SetActive(false);
+    }
+    private void TopDownMode()
+    {
+        CamFollow.m_Lens.OrthographicSize = 8;
+        TopDownCharacter.transform.position = gameObject.transform.position;
+        DisableSideScroller();
+        CamFollow.Follow = TopDownCharacter.transform;
+        TopDownCharacter.SetActive(true);
+        IsometricCharacter.SetActive(false);
+    }
+    private void IsometricMode()
+    {
+        CamFollow.m_Lens.OrthographicSize = 8;
+        DisableSideScroller();
+        IsometricCharacter.transform.position = gameObject.transform.position;
+        CamFollow.Follow = IsometricCharacter.transform;
+        TopDownCharacter.SetActive(false);
+        IsometricCharacter.SetActive(true);
     }
 }
