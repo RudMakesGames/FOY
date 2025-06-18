@@ -51,6 +51,7 @@ public class PerspectiveChanger : MonoBehaviour
     private void DisableSideScroller()
     {
         GetComponent<Rigidbody2D>().gravityScale = 0;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
         InteractionEye.SetActive(false);
         GetComponent<SpriteRenderer>().enabled = false;      
@@ -60,9 +61,10 @@ public class PerspectiveChanger : MonoBehaviour
     private void EnableSideScroller()
     {
         InteractionEye.SetActive(true);
-        GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Rigidbody2D>().gravityScale = 1;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         GetComponent<Collider2D>().enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<PlayerInput>().enabled = true;
     }
     private void SideScrollerMode()
