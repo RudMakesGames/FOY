@@ -8,7 +8,7 @@ public class Door : MonoBehaviour
 {
     [SerializeField] private Transform Destination;
     [SerializeField] private float Delay;
-    private GameObject Player;
+    private GameObject Player,Isometric,Topdown;
     public CinemachineConfiner2D confiner;
     public Collider2D CamBound;
     public Perspective Perspective;
@@ -16,6 +16,7 @@ public class Door : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        
     }
 
     public void GoToTheDestination()
