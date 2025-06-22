@@ -15,18 +15,17 @@ public class TopDownMovement : MonoBehaviour
 
     public bool isJumping = false;
     public bool canJump = true;
-
+    [SerializeField]
     GameObject shadow;
 
-    CapsuleCollider2D playerCollider;
+    Collider2D playerCollider;
 
     private void Start()
     {
         isJumping = false;
         originalScale = transform.localScale;
-        shadow = transform.Find("shadow").gameObject;
         shadow.SetActive(false);
-        playerCollider = GetComponent<CapsuleCollider2D>();
+        playerCollider = GetComponent<Collider2D>();
     }
     private void Awake()
     {

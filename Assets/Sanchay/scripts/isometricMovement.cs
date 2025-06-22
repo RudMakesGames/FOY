@@ -11,9 +11,10 @@ public class isometricMovement : MonoBehaviour
     Vector2 moveInput, movementMag;
 
     public bool isJumping, canJump;
+    [SerializeField]
     GameObject shadow;
 
-    CapsuleCollider2D playerCollider;
+    Collider2D playerCollider;
 
     Vector3 originalScale;
 
@@ -24,10 +25,9 @@ public class isometricMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<CapsuleCollider2D>();
+        playerCollider = GetComponent<Collider2D>();
         isJumping = false;
         originalScale = transform.localScale;
-        shadow = transform.Find("shadow").gameObject;
         shadow.SetActive(false);
 
         canJump = true;
