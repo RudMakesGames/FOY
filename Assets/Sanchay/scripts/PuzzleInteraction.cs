@@ -8,7 +8,7 @@ public class PuzzleInteraction : MonoBehaviour
 {
     bool isDragging=false;
     [SerializeField] Vector3 offSet;
-    PaperPuzzleBase puzzleManager;
+    PaperPuzzle puzzleManager;
 
     [SerializeField] float snapDistance;
     [SerializeField] Vector2 correctPos;
@@ -17,7 +17,7 @@ public class PuzzleInteraction : MonoBehaviour
 
     private void Awake()
     {
-        puzzleManager = GameObject.Find("PuzzleManager").GetComponent<PaperPuzzleBase>();
+        puzzleManager = GameObject.Find("PaperPuzzle").GetComponent<PaperPuzzle>();
     }
     private void Start()
     {
@@ -35,7 +35,7 @@ public class PuzzleInteraction : MonoBehaviour
         isDragging = false;
         float tempSnapDistance;
 
-        if (!PaperPuzzleBase.oneSnapped)
+        if (!PaperPuzzle.oneSnapped)
             tempSnapDistance = 3.2f;
         else
             tempSnapDistance = snapDistance;
@@ -43,7 +43,7 @@ public class PuzzleInteraction : MonoBehaviour
         if(Vector2.Distance(transform.position, correctPos)< tempSnapDistance)
         {
             transform.position = correctPos;
-            PaperPuzzleBase.oneSnapped = true;
+            PaperPuzzle.oneSnapped = true;
             puzzleCompleteCheck?.Invoke();
         }
     }
