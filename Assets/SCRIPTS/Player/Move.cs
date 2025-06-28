@@ -72,6 +72,9 @@ namespace Inventory
         [Header("Idle Animation Switching")]
         [SerializeField]
         private float IdleTimer = 5;
+
+        [SerializeField]
+        float GroundSpeed = 4f, StairSpeed = 3.25f;
         private void Start()
         {
 
@@ -175,11 +178,12 @@ namespace Inventory
             if (isOnStairs())
             {
                 StartCoroutine(StairCase());
+                speed = StairSpeed;
 
             }
             else if (isGrounded())
             {
-
+                speed = GroundSpeed;
                 Physics2D.IgnoreLayerCollision(3, 6, false);
             }
 

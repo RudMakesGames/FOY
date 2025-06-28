@@ -57,30 +57,25 @@ public class PadlockManager : MonoBehaviour,IPuzzle
                 Debug.Log("Incorrect " + i);
                 return;
             }
+                  
         }
-
         OnPuzzleComplete();
 
+
+
+    }
+    public void ObtainKey()
+    {
+        StartCoroutine(GetKey());
     }
     IEnumerator GetKey()
     {
         if(PuzzleCompleted)
         {
-            yield return new WaitForSeconds(1);
-            Destroy(PuzzlePrefab);
-            
             PlayerManager.Instance.PickupKey();
             Debug.Log("Key pickedup");
+            yield return null;
             
-            PuzzleCompleted = false;
-            
-            BriefcaseCutscene.SetActive(true);
-            yield return new WaitForSeconds(3);
-            
-            
-           
-           OnPuzzleComplete();
-
         }
     }
     public void CutsceneEnd()
@@ -89,26 +84,14 @@ public class PadlockManager : MonoBehaviour,IPuzzle
     }
     IEnumerator ExitCutscene()
     {
-        BriefcaseCutscene.SetActive(false );
+        BriefcaseCutscene.SetActive(false);
         PuzzleManager.instance.isPuzzleActive = false;
         Destroy(Briefcase);
         keyPrompt.SetActive(true);
         yield return new WaitForSeconds(3);
         keyPrompt.SetActive(false);
-        SetActiveObject.SetActive(true );
+        SetActiveObject.SetActive(true);
         PadlockHintTrigger.SetActive(false);
-        
-        
-
-    }
-
-    private void Update()
-    {if(PuzzleCompleted)
-
-        {
-            StartCoroutine(GetKey());
-        }
-    
     }
 
     public void OpenPuzzle()
@@ -121,12 +104,20 @@ public class PadlockManager : MonoBehaviour,IPuzzle
         gameObject.SetActive(false);
     }
 
-    public void OnPuzzleComplete()
+    IEnumerator PuzzleCompleteSequence()
     {
+        AudioManager.instance.PlaySoundFXClip(CaseOpen, transform, 1, 1);
+        yield return new WaitForSeconds(1);
+        Destroy(PuzzlePrefab);
+        BriefcaseCutscene.SetActive(true);
         Debug.Log("PuzzleCorrected");
         PuzzleCompleted = true;
-        AudioManager.instance.PlaySoundFXClip(CaseOpen, transform, 1, 1);
+
         TaskManager.instance.TaskComplete();
-        Task3?.SetActive(true); 
+        Task3?.SetActive(true);
+    }
+    public void OnPuzzleComplete()
+    {
+        StartCoroutine (PuzzleCompleteSequence());
     }
 }
