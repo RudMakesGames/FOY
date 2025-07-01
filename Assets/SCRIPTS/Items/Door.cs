@@ -16,6 +16,7 @@ public class Door : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        Topdown = GameObject.Find("TopdownCharacter");
         
     }
 
@@ -30,6 +31,7 @@ public class Door : MonoBehaviour
         SetPlayerPerspective(Perspective);
         Player.transform.position = Destination.position;
         confiner.m_BoundingShape2D = CamBound;
+        Topdown.transform.localPosition = Player.transform.position;
     }
 
     public void SetPlayerPerspective(Perspective perspective)

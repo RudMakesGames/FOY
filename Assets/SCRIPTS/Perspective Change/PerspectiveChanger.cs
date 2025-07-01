@@ -77,7 +77,7 @@ public class PerspectiveChanger : MonoBehaviour
     }
     private void TopDownMode()
     {
-        CamFollow.m_Lens.OrthographicSize = 8;
+        CamFollow.m_Lens.OrthographicSize = 6;
         TopDownCharacter.transform.position = gameObject.transform.position;
         DisableSideScroller();
         CamFollow.Follow = TopDownCharacter.transform;
