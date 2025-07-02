@@ -8,15 +8,19 @@ public class Door : MonoBehaviour
 {
     [SerializeField] private Transform Destination;
     [SerializeField] private float Delay;
+    [SerializeField]
     private GameObject Player,Isometric,Topdown;
     public CinemachineConfiner2D confiner;
     public Collider2D CamBound;
     public Perspective Perspective;
 
-    private void Start()
+    private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        Topdown = GameObject.Find("TopdownCharacter");
+        Topdown = FindObjectOfType<TopDownMovement>().gameObject;
+    }
+    private void Start()
+    {
         
     }
 
@@ -31,7 +35,7 @@ public class Door : MonoBehaviour
         SetPlayerPerspective(Perspective);
         Player.transform.position = Destination.position;
         confiner.m_BoundingShape2D = CamBound;
-        Topdown.transform.localPosition = Player.transform.position;
+        Topdown.transform.position = Player.transform.position;
     }
 
     public void SetPlayerPerspective(Perspective perspective)
