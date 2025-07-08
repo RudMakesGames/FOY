@@ -1,9 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-
 public class PaperHolder
 {
     public int index;
@@ -11,61 +10,67 @@ public class PaperHolder
     public List<GameObject> NeighbourPieces;
     public Vector2 correctPos;
 }
-public class PaperPuzzle : MonoBehaviour,IPuzzle
+
+public class PaperPuzzle : MonoBehaviour, IPuzzle
 {
     public List<PaperHolder> puzzlePaper = new List<PaperHolder>();
-    Dictionary<GameObject, Vector2> piecePosDict;
+    private Dictionary<GameObject, Vector2> piecePosDict;
+
     public static bool oneSnapped = false;
-
-    public static bool allPiecesCorrect=false;
-    PaperAppearEffect appearEffect;
-
-    public Response response;
-
+    public static bool allPiecesCorrect = false;
     [SerializeField]
-    GameObject Puzzle;
+    private PaperAppearEffect appearEffect;
+    [SerializeField]
+    GameObject CompletedPuzzle;
+    public Response response;
+    [SerializeField] private GameObject Puzzle;
 
     private void Awake()
     {
         piecePosDict = new Dictionary<GameObject, Vector2>();
 
-        foreach(PaperHolder p in puzzlePaper)
+        foreach (PaperHolder p in puzzlePaper)
         {
-            if(p.PaperPiece!=null && p.correctPos!=null)
+            if (p.PaperPiece != null)
             {
                 piecePosDict[p.PaperPiece] = p.correctPos;
+                Debug.Log($"Piece Mapped: {p.PaperPiece.name} → {p.correctPos}");
             }
-            Debug.Log("Piece Mapped: " + p.PaperPiece + " Mapped Pos: " + p.correctPos);
         }
-        appearEffect = GameObject.Find("CompletedpaperPuzzle").GetComponent<PaperAppearEffect>();
+
+        appearEffect = GameObject.Find("CompletedpaperPuzzle")?.GetComponent<PaperAppearEffect>();
     }
 
     public Vector2 GetCorrectPos(GameObject puzzlePiece)
     {
-        if(piecePosDict.ContainsKey(puzzlePiece))
+        if (piecePosDict.TryGetValue(puzzlePiece, out Vector2 pos))
         {
-            return piecePosDict[puzzlePiece];
+            return pos;
         }
 
-        else return puzzlePiece.transform.position;
+        // fallback if something went wrong
+        return puzzlePiece.GetComponent<RectTransform>().anchoredPosition;
     }
 
     public void AreAllPiecesCorrectlyPlaced()
     {
-        foreach (var p in piecePosDict)
+        foreach (var entry in piecePosDict)
         {
-            GameObject piece = p.Key;
-            Vector2 correctPos = p.Value;
+            GameObject piece = entry.Key;
+            Vector2 correctPos = entry.Value;
 
-            float dist = Vector2.Distance(piece.transform.position, correctPos);
-            if (dist > 0.15f)
+            RectTransform rt = piece.GetComponent<RectTransform>();
+            if (rt == null) continue;
+
+            float dist = Vector2.Distance(rt.anchoredPosition, correctPos);
+            if (dist > 10f) 
             {
                 allPiecesCorrect = false;
                 return;
             }
         }
+
         OnPuzzleComplete();
-       
     }
 
     public void OpenPuzzle()
@@ -81,9 +86,10 @@ public class PaperPuzzle : MonoBehaviour,IPuzzle
     public void OnPuzzleComplete()
     {
         allPiecesCorrect = true;
-        Debug.Log("puzzle Complete");
-        appearEffect.startEffect();
+        Debug.Log("Puzzle Complete!");
+        CompletedPuzzle?.SetActive(true);
+        appearEffect?.startEffect();
         ClosePuzzle();
         response?.OnPuzzleFinish();
     }
-}
+}   

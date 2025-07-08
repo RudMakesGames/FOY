@@ -41,11 +41,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveAmt: 1.1
+    - _DissolveAmt: 0
     - _DissolveScale: 50
     - _HorizontalDissolve: 1.1
-    - _OutlineThickness: 0.055
-    - _TwirlStrength: 0.5
+    - _OutlineThickness: 1
+    - _TwirlStrength: 0
     - _verticalDissolve: 0
     m_Colors:
     - _OutlineColor: {r: 0.4339623, g: 0.3726305, b: 0.31687436, a: 1}

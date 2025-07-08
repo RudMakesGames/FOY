@@ -2,64 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Collider2D))]
-public class PuzzleInteraction : MonoBehaviour
+
+public class UIPuzzleInteraction : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    bool isDragging=false;
-    [SerializeField] Vector3 offSet;
-    PaperPuzzle puzzleManager;
+    private RectTransform rectTransform;
+    private Canvas canvas;
+    private Vector2 offset;
+    private bool isDragging = false;
 
-    [SerializeField] float snapDistance;
-    [SerializeField] Vector2 correctPos;
+    private PaperPuzzle puzzleManager;
 
+    [SerializeField] private float snapDistance = 50f; // in pixels
+    private Vector2 correctPos;
+    bool CanInteract = true;
     public UnityEvent puzzleCompleteCheck;
 
     private void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
         puzzleManager = GameObject.Find("PaperPuzzle").GetComponent<PaperPuzzle>();
     }
+
     private void Start()
     {
         correctPos = puzzleManager.GetCorrectPos(gameObject);
-        puzzleCompleteCheck.AddListener(()=>puzzleManager.AreAllPiecesCorrectlyPlaced());
+        puzzleCompleteCheck.AddListener(() => puzzleManager.AreAllPiecesCorrectlyPlaced());
     }
 
-    private void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        offSet = transform.position- GetMousePos();
-        isDragging = true;
-    }
-    private void OnMouseUp()
-    {
-        isDragging = false;
-        float tempSnapDistance;
-
-        if (!PaperPuzzle.oneSnapped)
-            tempSnapDistance = 3.2f;
-        else
-            tempSnapDistance = snapDistance;
-
-        if(Vector2.Distance(transform.position, correctPos)< tempSnapDistance)
+        if(CanInteract)
         {
-            transform.position = correctPos;
-            PaperPuzzle.oneSnapped = true;
-            puzzleCompleteCheck?.Invoke();
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, canvas.worldCamera, out Vector2 localPoint);
+            offset = rectTransform.anchoredPosition - localPoint;
+            isDragging = true;
         }
+       
     }
 
-    private void Update()
+    public void OnDrag(PointerEventData eventData)
     {
-        if (isDragging)
+        if (!isDragging) return;
+        if(CanInteract)
         {
-            transform.position = GetMousePos() + offSet;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, canvas.worldCamera, out Vector2 localPoint);
+            rectTransform.anchoredPosition = localPoint + offset;
         }
+       
     }
 
-    Vector3 GetMousePos()
+    public void OnPointerUp(PointerEventData eventData)
     {
-        Vector3 screenPos = Input.mousePosition;
-        screenPos.z = 0;
-        return Camera.main.ScreenToWorldPoint(screenPos);
+        if(CanInteract)
+        {
+            isDragging = false;
+
+            float tempSnapDistance = PaperPuzzle.oneSnapped ? snapDistance : 150f;
+
+            if (Vector2.Distance(rectTransform.anchoredPosition, correctPos) < tempSnapDistance)
+            {
+                rectTransform.anchoredPosition = correctPos;
+                PaperPuzzle.oneSnapped = true;
+                CanInteract = false;
+                puzzleCompleteCheck?.Invoke();
+            }
+        }
+        
     }
 }
